@@ -31,7 +31,7 @@ services:
         value: database
 
   # PostgreSQL Database
-  - type: pgsql
+  - type: postgresql
     name: event-management-db
     plan: free
     databaseName: event_management
