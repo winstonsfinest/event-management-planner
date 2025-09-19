@@ -29,6 +29,9 @@ COPY . /var/www
 # Copy existing application directory permissions
 COPY --chown=www-data:www-data . /var/www
 
+# Create .env file if it doesn't exist
+RUN if [ ! -f .env ]; then cp .env.example .env 2>/dev/null || echo "APP_NAME=Laravel" > .env; fi
+
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
