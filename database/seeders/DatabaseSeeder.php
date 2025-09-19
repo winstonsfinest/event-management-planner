@@ -16,13 +16,15 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // Create TheFinestGroup admin user
-        User::create([
-            'name' => 'TheFinestGroup Admin',
-            'email' => 'calendar@thefinestgroup.co.uk',
-            'password' => bcrypt('admin'),
-            'email_verified_at' => now(),
-        ]);
+        // Create TheFinestGroup admin user (only if doesn't exist)
+        User::firstOrCreate(
+            ['email' => 'calendar@thefinestgroup.co.uk'],
+            [
+                'name' => 'TheFinestGroup Admin',
+                'password' => bcrypt('admin'),
+                'email_verified_at' => now(),
+            ]
+        );
 
         $this->call([
             SectionTableSeeder::class,
