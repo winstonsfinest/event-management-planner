@@ -49,6 +49,9 @@ RUN php artisan key:generate
 # Run migrations first to create database tables
 RUN php artisan migrate --force
 
+# Seed the database with admin user and sample data
+RUN php artisan db:seed --force
+
 # Clear all caches first, then cache configuration
 RUN php artisan config:clear
 RUN php artisan route:clear

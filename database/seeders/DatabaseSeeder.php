@@ -16,10 +16,12 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin',
+        // Create TheFinestGroup admin user
+        User::create([
+            'name' => 'TheFinestGroup Admin',
+            'email' => 'calendar@thefinestgroup.co.uk',
             'password' => bcrypt('admin'),
+            'email_verified_at' => now(),
         ]);
 
         $this->call([

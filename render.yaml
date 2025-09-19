@@ -1,8 +1,6 @@
 services:
-  # Laravel Web Service
   - type: web
     name: event-management-planner
-    runtime: php-8.2
     plan: free
     buildCommand: |
       composer install --no-dev --optimize-autoloader
@@ -12,14 +10,15 @@ services:
       php artisan view:cache
       php artisan migrate --force
     startCommand: php artisan serve --host 0.0.0.0 --port $PORT
-    healthCheckPath: /
     envVars:
+      - key: APP_NAME
+        value: TheFinestGroup Event Management
       - key: APP_ENV
         value: production
       - key: APP_DEBUG
         value: false
-      - key: LOG_LEVEL
-        value: error
+      - key: APP_TIMEZONE
+        value: GMT
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
