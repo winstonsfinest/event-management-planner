@@ -32,13 +32,25 @@ COPY --chown=www-data:www-data . /var/www
 # Create .env file if it doesn't exist
 RUN if [ ! -f .env ]; then cp .env.example .env 2>/dev/null || echo "APP_NAME=Laravel" > .env; fi
 
+# Force PostgreSQL configuration
+RUN echo "DB_CONNECTION=pgsql" >> .env
+RUN echo "DB_HOST=dpg-d36pkd3uibrs73aihe5g-a.oregon-postgres.render.com" >> .env
+RUN echo "DB_PORT=5432" >> .env
+RUN echo "DB_DATABASE=event_management_2xw5" >> .env
+RUN echo "DB_USERNAME=event_user" >> .env
+RUN echo "DB_PASSWORD=ThxhBQaeDfhCRybZAHn1vauvuRccvIUo" >> .env
+
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
 # Generate application key
 RUN php artisan key:generate
 
-# Cache configuration
+# Clear all caches first, then cache configuration
+RUN php artisan config:clear
+RUN php artisan route:clear
+RUN php artisan view:clear
+RUN php artisan cache:clear
 RUN php artisan config:cache
 RUN php artisan route:cache
 RUN php artisan view:cache
