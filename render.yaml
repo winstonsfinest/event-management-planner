@@ -2,6 +2,7 @@ services:
   # Laravel Web Service
   - type: web
     name: event-management-planner
+    runtime: php-8.2
     plan: free
     buildCommand: |
       composer install --no-dev --optimize-autoloader
