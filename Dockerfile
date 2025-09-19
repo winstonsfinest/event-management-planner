@@ -49,6 +49,10 @@ RUN echo "CACHE_DRIVER=database" >> .env
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+# Ensure assets are accessible
+RUN chmod -R 755 public/assets
+RUN chown -R www-data:www-data public/assets
+
 # Generate application key
 RUN php artisan key:generate
 
@@ -63,6 +67,7 @@ RUN php artisan config:clear
 RUN php artisan route:clear
 RUN php artisan view:clear
 RUN php artisan cache:clear
+RUN php artisan session:table
 RUN php artisan config:cache
 RUN php artisan route:cache
 RUN php artisan view:cache
