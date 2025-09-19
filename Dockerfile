@@ -40,6 +40,12 @@ RUN echo "DB_DATABASE=event_management_2xw5" >> .env
 RUN echo "DB_USERNAME=event_user" >> .env
 RUN echo "DB_PASSWORD=ThxhBQaeDfhCRybZAHn1vauvuRccvIUo" >> .env
 
+# Force session configuration
+RUN echo "SESSION_DRIVER=database" >> .env
+RUN echo "SESSION_LIFETIME=120" >> .env
+RUN echo "SESSION_ENCRYPT=false" >> .env
+RUN echo "CACHE_DRIVER=database" >> .env
+
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 
