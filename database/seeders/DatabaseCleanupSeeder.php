@@ -73,34 +73,49 @@ class DatabaseCleanupSeeder extends Seeder
      */
     private function addDummyRecords(): void
     {
-        // Add one dummy client
-        $client = Client::create([
-            'business_name' => 'Sample Client Company',
-            'business_address' => '123 Sample Street, Sample City, SC1 2AB',
-            'contact_name' => 'John Sample',
-        ]);
+        try {
+            // Add one dummy client
+            $this->command->info('Creating dummy client...');
+            $client = Client::create([
+                'business_name' => 'Sample Client Company',
+                'business_address' => '123 Sample Street, Sample City, SC1 2AB',
+                'contact_name' => 'John Sample',
+            ]);
+            $this->command->info("Created client with ID: {$client->id}");
 
-        // Add one dummy staff member
-        $staff = Staff::create([
-            'name' => 'Jane Sample',
-            'mobile' => '07000 123456',
-            'email' => 'jane.sample@example.com',
-        ]);
+            // Add one dummy staff member
+            $this->command->info('Creating dummy staff...');
+            $staff = Staff::create([
+                'name' => 'Jane Sample',
+                'mobile' => '07000 123456',
+                'email' => 'jane.sample@example.com',
+            ]);
+            $this->command->info("Created staff with ID: {$staff->id}");
 
-        // Add one dummy location (needed for events)
-        $location = Location::create([
-            'name' => 'Sample Venue',
-            'address' => '456 Venue Road, Event City, EC1 3CD',
-        ]);
+            // Add one dummy location (needed for events)
+            $this->command->info('Creating dummy location...');
+            $location = Location::create([
+                'name' => 'Sample Venue',
+                'address' => '456 Venue Road, Event City, EC1 3CD',
+            ]);
+            $this->command->info("Created location with ID: {$location->id}");
 
-        // Add one dummy event
-        Event::create([
-            'date' => '2024-12-31',
-            'client_id' => $client->id,
-            'location_id' => $location->id,
-            'event_style' => 'SAMPLE EVENT',
-            'pax' => '50',
-        ]);
+            // Add one dummy event
+            $this->command->info('Creating dummy event...');
+            $event = Event::create([
+                'date' => '2024-12-31',
+                'client_id' => $client->id,
+                'location_id' => $location->id,
+                'event_style' => 'SAMPLE EVENT',
+                'pax' => '50',
+            ]);
+            $this->command->info("Created event with ID: {$event->id}");
+
+            $this->command->info('All dummy records created successfully!');
+        } catch (\Exception $e) {
+            $this->command->error('Error creating dummy records: ' . $e->getMessage());
+            throw $e;
+        }
     }
 }
 
