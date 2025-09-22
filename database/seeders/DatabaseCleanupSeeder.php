@@ -22,32 +22,42 @@ class DatabaseCleanupSeeder extends Seeder
     {
         // Clean up sample data while keeping the admin user
         
+        $this->command->info('Starting database cleanup...');
+        
         // Remove sample events first (they reference other tables)
-        Event::truncate();
+        $eventCount = Event::count();
+        $this->command->info("Found {$eventCount} events to delete");
+        Event::query()->delete();
         
         // Remove sample clients
-        Client::truncate();
+        $clientCount = Client::count();
+        $this->command->info("Found {$clientCount} clients to delete");
+        Client::query()->delete();
         
         // Remove sample staff
-        Staff::truncate();
+        $staffCount = Staff::count();
+        $this->command->info("Found {$staffCount} staff to delete");
+        Staff::query()->delete();
         
         // Remove sample menu items
-        MenuItem::truncate();
+        MenuItem::query()->delete();
         
         // Remove sample menu types
-        MenuType::truncate();
+        MenuType::query()->delete();
         
         // Remove sample equipment
-        Equipment::truncate();
+        Equipment::query()->delete();
         
         // Remove sample equipment types
-        EquipmentType::truncate();
+        EquipmentType::query()->delete();
         
         // Remove sample locations
-        Location::truncate();
+        Location::query()->delete();
         
         // Remove sample sections
-        Section::truncate();
+        Section::query()->delete();
+        
+        $this->command->info('All records deleted. Adding dummy records...');
         
         // Add one dummy record to each main table
         $this->addDummyRecords();
