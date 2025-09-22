@@ -33,6 +33,29 @@ Route::get('/cleanup-db', function () {
     }
 });
 
+// Simple test route to add one client
+Route::get('/add-test-client', function () {
+    try {
+        $client = \App\Models\Client::create([
+            'business_name' => 'Test Client Company',
+            'business_address' => '123 Test Street, Test City, TC1 2AB',
+            'contact_name' => 'Test Contact',
+        ]);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Test client created successfully!',
+            'client_id' => $client->id,
+            'client_name' => $client->business_name
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error: ' . $e->getMessage()
+        ]);
+    }
+});
+
 Route::name('admin.')->middleware('auth')->group(function () {
 
     Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
