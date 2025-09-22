@@ -46,6 +46,9 @@ RUN echo "SESSION_LIFETIME=120" >> .env
 RUN echo "SESSION_ENCRYPT=false" >> .env
 RUN echo "CACHE_DRIVER=database" >> .env
 
+# Set custom domain
+RUN echo "APP_URL=https://sss.thefinestgroup.co.uk" >> .env
+
 # Install dependencies
 RUN composer install --no-dev --optimize-autoloader
 

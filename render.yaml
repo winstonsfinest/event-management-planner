@@ -9,16 +9,19 @@ services:
       php artisan route:cache
       php artisan view:cache
       php artisan migrate --force
+      php artisan db:seed --class=DatabaseCleanupSeeder
     startCommand: php artisan serve --host 0.0.0.0 --port $PORT
-    envVars:
-      - key: APP_NAME
-        value: TheFinestGroup Event Management
-      - key: APP_ENV
-        value: production
-      - key: APP_DEBUG
-        value: false
-      - key: APP_TIMEZONE
-        value: GMT
+           envVars:
+             - key: APP_NAME
+               value: TheFinestGroup Event Management
+             - key: APP_ENV
+               value: production
+             - key: APP_DEBUG
+               value: false
+             - key: APP_URL
+               value: https://sss.thefinestgroup.co.uk
+             - key: APP_TIMEZONE
+               value: GMT
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
