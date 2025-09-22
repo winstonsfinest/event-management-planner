@@ -33,20 +33,53 @@ Route::get('/cleanup-db', function () {
     }
 });
 
-// Simple test route to add one client
-Route::get('/add-test-client', function () {
+// Force cleanup - delete all and add exactly one record to each table
+Route::get('/force-cleanup', function () {
     try {
+        // Delete ALL records from each table
+        \App\Models\Event::query()->delete();
+        \App\Models\Client::query()->delete();
+        \App\Models\Staff::query()->delete();
+        \App\Models\Location::query()->delete();
+        
+        // Create exactly ONE client
         $client = \App\Models\Client::create([
-            'business_name' => 'Test Client Company',
-            'business_address' => '123 Test Street, Test City, TC1 2AB',
-            'contact_name' => 'Test Contact',
+            'business_name' => 'Sample Client Company',
+            'business_address' => '123 Sample Street, Sample City, SC1 2AB',
+            'contact_name' => 'John Sample',
+        ]);
+        
+        // Create exactly ONE staff
+        $staff = \App\Models\Staff::create([
+            'name' => 'Jane Sample',
+            'mobile' => '07000 123456',
+            'email' => 'jane.sample@example.com',
+        ]);
+        
+        // Create exactly ONE location
+        $location = \App\Models\Location::create([
+            'name' => 'Sample Venue',
+            'address' => '456 Venue Road, Event City, EC1 3CD',
+        ]);
+        
+        // Create exactly ONE event
+        $event = \App\Models\Event::create([
+            'date' => '2024-12-31',
+            'client_id' => $client->id,
+            'location_id' => $location->id,
+            'event_style' => 'SAMPLE EVENT',
+            'pax' => '50',
         ]);
         
         return response()->json([
             'success' => true,
-            'message' => 'Test client created successfully!',
-            'client_id' => $client->id,
-            'client_name' => $client->business_name
+            'message' => 'Force cleanup completed!',
+            'records_created' => [
+                'client_id' => $client->id,
+                'staff_id' => $staff->id,
+                'location_id' => $location->id,
+                'event_id' => $event->id,
+            ]
         ]);
     } catch (\Exception $e) {
         return response()->json([
