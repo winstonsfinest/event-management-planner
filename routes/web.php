@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('admin.index');
 Route::get('/login', [HomeController::class, 'login'])->name('login');
-Route::post('/doLogin', [HomeController::class, 'doLogin'])->name('doLogin')->middleware('https');
+Route::post('/doLogin', [HomeController::class, 'doLogin'])->name('doLogin');
 Route::get('/form', [FormController::class, 'index'])->name('index');
 
 // Test route to run cleanup command
@@ -31,6 +31,16 @@ Route::get('/test-cleanup', function () {
             'message' => 'Error: ' . $e->getMessage()
         ]);
     }
+});
+
+// Test CSRF token
+Route::get('/test-csrf', function () {
+    return response()->json([
+        'csrf_token' => csrf_token(),
+        'session_id' => session()->getId(),
+        'secure' => request()->secure(),
+        'session_secure' => config('session.secure'),
+    ]);
 });
 
 
