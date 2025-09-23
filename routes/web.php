@@ -17,6 +17,10 @@ Route::get('/login', [HomeController::class, 'login'])->name('login');
 Route::get('/login-simple', function () {
     return view('admin.login-simple');
 })->name('login-simple');
+
+Route::get('/login-fresh', function () {
+    return view('admin.login-fresh');
+})->name('login-fresh');
 Route::post('/doLogin', [HomeController::class, 'doLogin'])->name('doLogin');
 
 // Alternative login route without CSRF for testing

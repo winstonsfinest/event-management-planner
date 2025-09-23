@@ -5,6 +5,10 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
 
+// Log the request for debugging
+error_log('Raw PHP login called - Method: ' . $_SERVER['REQUEST_METHOD']);
+error_log('Raw PHP login called - Headers: ' . print_r(getallheaders(), true));
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Method not allowed']);
@@ -15,6 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 $input = json_decode(file_get_contents('php://input'), true);
 $email = $input['email'] ?? '';
 $password = $input['password'] ?? '';
+
+error_log('Raw PHP login - Email: ' . $email . ', Password: ' . $password);
 
 // Simple hardcoded credentials for testing
 $valid_credentials = [
