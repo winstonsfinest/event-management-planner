@@ -103,7 +103,7 @@
                 const data = Object.fromEntries(formData);
                 
                 try {
-                    const response = await fetch('/doLogin-simple', {
+                    const response = await fetch('/login-raw.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
