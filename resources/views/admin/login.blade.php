@@ -29,8 +29,8 @@
         </div>
         <div class="card-body">
             <p class="login-box-msg">Sign in to start your session</p>
-            <form action="{{ secure_url(route('doLogin-test')) }}" method="post">
-                @csrf
+            <form action="{{ secure_url(route('doLogin-simple')) }}" method="post">
+                <!-- No CSRF token for testing -->
                 <div class="input-group mb-3">
                     <input type="text" name="email" class="form-control" placeholder="Username" value="{{ $old ?? '' }}">
                     <div class="input-group-append">
