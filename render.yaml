@@ -41,7 +41,7 @@ services:
       - key: SESSION_LIFETIME
         value: 120
       - key: SESSION_ENCRYPT
-        value: false
+        value: true
       - key: SESSION_PATH
         value: /
       - key: SESSION_DOMAIN
@@ -52,7 +52,5 @@ services:
         value: true
       - key: SESSION_SAME_SITE
         value: lax
-      - key: SESSION_ENCRYPT
-        value: true
       - key: QUEUE_CONNECTION
         value: database

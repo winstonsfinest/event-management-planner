@@ -6,6 +6,11 @@ use App\Models\Client;
 use App\Models\Event;
 use App\Models\Location;
 use App\Models\Staff;
+use App\Models\MenuItem;
+use App\Models\MenuType;
+use App\Models\Equipment;
+use App\Models\EquipmentType;
+use App\Models\Section;
 use Illuminate\Console\Command;
 
 class DatabaseCleanupCommand extends Command
@@ -45,6 +50,11 @@ class DatabaseCleanupCommand extends Command
         Staff::query()->delete();
         
         Location::query()->delete();
+        MenuItem::query()->delete();
+        MenuType::query()->delete();
+        Equipment::query()->delete();
+        EquipmentType::query()->delete();
+        Section::query()->delete();
         
         $this->info('All records deleted. Adding dummy records...');
         
