@@ -81,7 +81,7 @@
             <div class="error">{{ $error }}</div>
         @endif
         
-        <form action="{{ url('/doLogin-simple') }}" method="post">
+        <form id="loginForm">
             <div class="form-group">
                 <label for="email">Username:</label>
                 <input type="text" name="email" id="email" placeholder="Enter username" value="{{ $old ?? '' }}" required>
@@ -94,6 +94,36 @@
             
             <button type="submit" class="btn">Sign In</button>
         </form>
+        
+        <script>
+            document.getElementById('loginForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData);
+                
+                try {
+                    const response = await fetch('/doLogin-simple', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    const result = await response.json();
+                    
+                    if (result.success) {
+                        window.location.href = result.redirect;
+                    } else {
+                        alert('Error: ' + result.message);
+                    }
+                } catch (error) {
+                    alert('Network error: ' + error.message);
+                }
+            });
+        </script>
     </div>
 </body>
 </html>

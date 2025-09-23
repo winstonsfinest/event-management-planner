@@ -22,42 +22,53 @@ Route::post('/doLogin', [HomeController::class, 'doLogin'])->name('doLogin');
 // Alternative login route without CSRF for testing
 Route::post('/doLogin-test', [HomeController::class, 'doLogin'])->name('doLogin-test');
 
-// Completely CSRF-free login route
+// Completely session-free login route
 Route::post('/doLogin-simple', function (Request $request) {
-    // Force HTTPS redirect if not already HTTPS
-    if (!$request->secure() && app()->environment('production')) {
-        return redirect()->secure($request->getRequestUri());
-    }
+    try {
+        // Create admin user if none exists
+        if (\App\Models\User::count() == 0) {
+            \App\Models\User::create([
+                'name' => 'TheFinestGroup Admin',
+                'email' => 'calendar@thefinestgroup.co.uk',
+                'password' => bcrypt('admin'),
+                'email_verified_at' => now(),
+            ]);
+        }
 
-    // Create admin user if none exists
-    if (\App\Models\User::count() == 0) {
-        \App\Models\User::create([
-            'name' => 'TheFinestGroup Admin',
-            'email' => 'calendar@thefinestgroup.co.uk',
-            'password' => bcrypt('admin'),
-            'email_verified_at' => now(),
+        $user = \App\Models\User::where('email', $request->get('email'))->first();
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid email or password'
+            ]);
+        }
+
+        if ($user->email == $request->get('email') && \Hash::check($request->get('password'), $user->password)) {
+            // Create a simple token-based authentication
+            $token = base64_encode($user->id . '|' . time());
+            
+            // Set a simple cookie for authentication
+            $response = response()->json([
+                'success' => true,
+                'message' => 'Login successful',
+                'redirect' => url('/admin/events')
+            ]);
+            
+            $response->cookie('auth_token', $token, 60); // 60 minutes
+            return $response;
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Invalid email or password'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error: ' . $e->getMessage()
         ]);
     }
-
-    $user = \App\Models\User::where('email', $request->get('email'))->first();
-
-    if (!$user) {
-        return redirect()->route('login')->with([
-            'error' => 'Invalid email or password',
-            'old' => $request->only(['email'])
-        ]);
-    }
-
-    if ($user->email == $request->get('email') && \Hash::check($request->get('password'), $user->password)) {
-        \Illuminate\Support\Facades\Auth::login($user, true); // Remember the user
-        $request->session()->regenerate(); // Regenerate session ID for security
-        return redirect()->route('admin.index');
-    }
-
-    return redirect()->route('login')->with([
-        'error' => 'Invalid email or password',
-        'old' => $request->only(['email'])
-    ]);
 })->name('doLogin-simple');
 Route::get('/form', [FormController::class, 'index'])->name('index');
 
