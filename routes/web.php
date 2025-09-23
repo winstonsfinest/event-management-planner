@@ -16,6 +16,23 @@ Route::get('/login', [HomeController::class, 'login'])->name('login');
 Route::post('/doLogin', [HomeController::class, 'doLogin'])->name('doLogin');
 Route::get('/form', [FormController::class, 'index'])->name('index');
 
+// Test route to run cleanup command
+Route::get('/test-cleanup', function () {
+    try {
+        \Artisan::call('db:cleanup');
+        return response()->json([
+            'success' => true,
+            'message' => 'Cleanup command executed successfully!',
+            'output' => \Artisan::output()
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Error: ' . $e->getMessage()
+        ]);
+    }
+});
+
 
 Route::name('admin.')->middleware('auth')->group(function () {
 
