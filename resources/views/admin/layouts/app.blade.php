@@ -9,18 +9,18 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/all.min.css') }}">
 
 
-    <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/responsive.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/buttons.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/buttons.bootstrap4.min.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('assets/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/select2-bootstrap4.min.css') }}">
 
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
+    <link rel="stylesheet" href="{{ url('assets/css/adminlte.min.css') }}">
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Site wrapper -->
@@ -36,21 +36,21 @@
 <!-- ./wrapper -->
 
 <!-- jQuery -->
-<script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+<script src="{{ url('assets/js/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
-<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url('assets/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
-<script src="{{ asset('assets/js/adminlte.min.js') }}"></script>
+<script src="{{ url('assets/js/adminlte.min.js') }}"></script>
 
-<script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('assets/js/responsive.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('assets/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('assets/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ url('assets/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ url('assets/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ url('assets/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ url('assets/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ url('assets/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ url('assets/js/buttons.bootstrap4.min.js') }}"></script>
 
-<script src="{{ asset('assets/js/select2.full.min.js') }}"></script>
-<script src="{{ asset('assets/js/tata.js') }}"></script>
+<script src="{{ url('assets/js/select2.full.min.js') }}"></script>
+<script src="{{ url('assets/js/tata.js') }}"></script>
 
 @if(isset($success_toast) || session('success_toast'))
     <script type="text/javascript">

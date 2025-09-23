@@ -58,6 +58,18 @@ Route::get('/debug-session', function () {
     ]);
 });
 
+// Debug asset URLs
+Route::get('/debug-assets', function () {
+    return response()->json([
+        'app_url' => config('app.url'),
+        'asset_css' => asset('assets/css/adminlte.min.css'),
+        'asset_js' => asset('assets/js/jquery.min.js'),
+        'public_path' => public_path(),
+        'asset_path' => public_path('assets/css/adminlte.min.css'),
+        'file_exists' => file_exists(public_path('assets/css/adminlte.min.css')),
+    ]);
+});
+
 
 Route::name('admin.')->middleware('auth')->group(function () {
 
