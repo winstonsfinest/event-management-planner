@@ -13,6 +13,43 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('admin.index');
+
+// Auth bridge route - authenticates user from raw PHP login
+Route::get('/auth-bridge', function () {
+    if (request()->cookie('auth_token')) {
+        $token = request()->cookie('auth_token');
+        $decoded = base64_decode($token);
+        $parts = explode('|', $decoded);
+        
+        if (count($parts) === 2) {
+            $email = $parts[0];
+            $timestamp = $parts[1];
+            
+            // Check if token is not expired (1 hour)
+            if (time() - $timestamp < 3600) {
+                // Find or create user
+                $user = \App\Models\User::where('email', $email)->first();
+                if (!$user) {
+                    $user = \App\Models\User::create([
+                        'name' => 'TheFinestGroup Admin',
+                        'email' => $email,
+                        'password' => bcrypt('admin'),
+                        'email_verified_at' => now(),
+                    ]);
+                }
+                
+                // Login user in Laravel
+                \Illuminate\Support\Facades\Auth::login($user, true);
+                
+                // Redirect to main app
+                return redirect()->route('admin.events.index');
+            }
+        }
+    }
+    
+    // If no valid token, redirect to standalone login
+    return redirect('/standalone-login.html');
+});
 Route::get('/login', [HomeController::class, 'login'])->name('login');
 Route::get('/login-simple', function () {
     return view('admin.login-simple');

@@ -35,7 +35,7 @@ if (isset($valid_credentials[$email]) && $valid_credentials[$email] === $passwor
     echo json_encode([
         'success' => true,
         'message' => 'Login successful',
-        'redirect' => 'https://sss.thefinestgroup.co.uk/events'
+        'redirect' => 'https://sss.thefinestgroup.co.uk/auth-bridge'
     ]);
 } else {
     http_response_code(401);
