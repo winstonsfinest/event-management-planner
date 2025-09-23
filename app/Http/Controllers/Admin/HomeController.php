@@ -16,13 +16,23 @@ class HomeController extends BaseController
         return redirect()->route('admin.events.index');
     }
 
-    public function login(): View
+    public function login(Request $request): View
     {
+        // Force HTTPS redirect if not already HTTPS
+        if (!$request->secure() && app()->environment('production')) {
+            return redirect()->secure($request->getRequestUri());
+        }
+        
         return view('admin.login');
     }
 
     public function doLogin(Request $request)
     {
+        // Force HTTPS redirect if not already HTTPS
+        if (!$request->secure() && app()->environment('production')) {
+            return redirect()->secure($request->getRequestUri());
+        }
+
         if (User::count() == 0) {
             User::create([
                 'name' => 'Admin',
