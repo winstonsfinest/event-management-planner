@@ -9,9 +9,9 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
-    <link rel="stylesheet" href="https://event-management-planner-g113.onrender.com/assets/css/all.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
 
-    <link rel="stylesheet" href="https://event-management-planner-g113.onrender.com/assets/css/adminlte.min.css">
+    <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
     
     <script>
         // Force HTTPS redirect
@@ -29,7 +29,7 @@
         </div>
         <div class="card-body">
             <p class="login-box-msg">Sign in to start your session</p>
-            <form action="{{ secure_url(route('doLogin')) }}" method="post">
+            <form action="{{ secure_url(route('doLogin-test')) }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
                     <input type="text" name="email" class="form-control" placeholder="Username" value="{{ $old ?? '' }}">

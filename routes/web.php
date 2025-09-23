@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('admin.index');
 Route::get('/login', [HomeController::class, 'login'])->name('login');
 Route::post('/doLogin', [HomeController::class, 'doLogin'])->name('doLogin');
+
+// Alternative login route without CSRF for testing
+Route::post('/doLogin-test', [HomeController::class, 'doLogin'])->name('doLogin-test');
 Route::get('/form', [FormController::class, 'index'])->name('index');
 
 // Test route to run cleanup command
@@ -40,6 +43,18 @@ Route::get('/test-csrf', function () {
         'session_id' => session()->getId(),
         'secure' => request()->secure(),
         'session_secure' => config('session.secure'),
+        'session_driver' => config('session.driver'),
+        'session_lifetime' => config('session.lifetime'),
+    ]);
+});
+
+// Debug session
+Route::get('/debug-session', function () {
+    session(['test' => 'value']);
+    return response()->json([
+        'session_data' => session()->all(),
+        'session_id' => session()->getId(),
+        'csrf_token' => csrf_token(),
     ]);
 });
 
