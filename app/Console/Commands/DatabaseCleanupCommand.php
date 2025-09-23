@@ -27,7 +27,7 @@ class DatabaseCleanupCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Clean up database by removing all records and adding one dummy record to each main table';
+    protected $description = 'Clean up database by removing Clients, Events, Staff records and adding one dummy record to each';
 
     /**
      * Execute the console command.
@@ -49,12 +49,8 @@ class DatabaseCleanupCommand extends Command
         $this->info("Found {$staffCount} staff to delete");
         Staff::query()->delete();
         
+        // Only delete Location (needed for Events), but keep Menu Types, Menu Items, and Equipment
         Location::query()->delete();
-        MenuItem::query()->delete();
-        MenuType::query()->delete();
-        Equipment::query()->delete();
-        EquipmentType::query()->delete();
-        Section::query()->delete();
         
         $this->info('All records deleted. Adding dummy records...');
         
@@ -93,6 +89,7 @@ class DatabaseCleanupCommand extends Command
         
         $this->info('Database cleanup completed successfully!');
         $this->info('One dummy record added to Clients, Events, and Staff tables.');
+        $this->info('Menu Types, Menu Items, and Equipment data has been preserved.');
         
         return Command::SUCCESS;
     }
