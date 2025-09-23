@@ -33,11 +33,13 @@ class HomeController extends BaseController
             return redirect()->secure($request->getRequestUri());
         }
 
+        // Create admin user if none exists
         if (User::count() == 0) {
             User::create([
-                'name' => 'Admin',
-                'email' => 'admin',
-                'password' => bcrypt('admin')
+                'name' => 'TheFinestGroup Admin',
+                'email' => 'calendar@thefinestgroup.co.uk',
+                'password' => bcrypt('admin'),
+                'email_verified_at' => now(),
             ]);
         }
 
@@ -51,7 +53,8 @@ class HomeController extends BaseController
         }
 
         if ($user->email == $request->get('email') && \Hash::check($request->get('password'), $user->password)) {
-            Auth::login($user);
+            Auth::login($user, true); // Remember the user
+            $request->session()->regenerate(); // Regenerate session ID for security
             return redirect()->route('admin.index');
         }
 

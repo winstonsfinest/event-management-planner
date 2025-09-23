@@ -30,7 +30,7 @@
         <div class="card-body">
             <p class="login-box-msg">Sign in to start your session</p>
             <form action="{{ secure_url(route('doLogin')) }}" method="post">
-                {{ csrf_field() }}
+                @csrf
                 <div class="input-group mb-3">
                     <input type="text" name="email" class="form-control" placeholder="Username" value="{{ $old ?? '' }}">
                     <div class="input-group-append">
