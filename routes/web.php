@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('admin.index');
 Route::get('/login', [HomeController::class, 'login'])->name('login');
+Route::get('/login-simple', function () {
+    return view('admin.login-simple');
+})->name('login-simple');
 Route::post('/doLogin', [HomeController::class, 'doLogin'])->name('doLogin');
 
 // Alternative login route without CSRF for testing
