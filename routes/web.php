@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('admin.index');
 Route::get('/login', [HomeController::class, 'login'])->name('login');
-Route::post('/doLogin', [HomeController::class, 'doLogin'])->name('doLogin');
+Route::post('/doLogin', [HomeController::class, 'doLogin'])->name('doLogin')->middleware('https');
 Route::get('/form', [FormController::class, 'index'])->name('index');
 
 // Test route to run cleanup command

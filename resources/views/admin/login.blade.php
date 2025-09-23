@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>Event Management Planner</title>
 
     <link rel="stylesheet"
@@ -11,6 +12,13 @@
     <link rel="stylesheet" href="https://event-management-planner-g113.onrender.com/assets/css/all.min.css">
 
     <link rel="stylesheet" href="https://event-management-planner-g113.onrender.com/assets/css/adminlte.min.css">
+    
+    <script>
+        // Force HTTPS redirect
+        if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+            location.replace('https:' + window.location.href.substring(window.location.protocol.length));
+        }
+    </script>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -21,7 +29,7 @@
         </div>
         <div class="card-body">
             <p class="login-box-msg">Sign in to start your session</p>
-            <form action="{{ route('doLogin') }}" method="post">
+            <form action="{{ secure_url(route('doLogin')) }}" method="post">
                 {{ csrf_field() }}
                 <div class="input-group mb-3">
                     <input type="text" name="email" class="form-control" placeholder="Username" value="{{ $old ?? '' }}">
