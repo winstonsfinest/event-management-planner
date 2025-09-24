@@ -15,15 +15,6 @@
 
         <section class="content">
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
 
             @if (session('error'))
                 <div class="alert alert-danger">
@@ -37,7 +28,7 @@
                 </div>
             @endif
 
-            <form method="post" action="{{ route('admin.clients.store') }}">
+            <form method="post" action="{{ secure_url(route('admin.clients.store')) }}">
                 {{ csrf_field() }}
                 <div class="card">
                     <div class="card-header">
@@ -48,9 +39,6 @@
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Business Name</label>
                             <div class="col-sm-10">
                                 <input type="text" name="business_name" class="form-control" id="inputEmail3" value="{{ old('business_name') }}">
-                                @error('business_name')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">

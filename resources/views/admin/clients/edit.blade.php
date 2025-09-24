@@ -19,15 +19,6 @@
 
         <section class="content">
 
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul class="mb-0">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
 
             @if (session('error'))
                 <div class="alert alert-danger">
@@ -41,7 +32,7 @@
                 </div>
             @endif
 
-            <form method="post" action="{{ $isEdit ? route('admin.clients.update', $client) : route('admin.clients.store') }}">
+            <form method="post" action="{{ $isEdit ? secure_url(route('admin.clients.update', $client)) : secure_url(route('admin.clients.store')) }}">
                 {{ csrf_field() }}
                 @if($isEdit)
                     @method('PUT')
@@ -93,12 +84,9 @@
                         <div class="form-group row">
                             <label for="contact_email" class="col-sm-2 col-form-label">Contact Email Address</label>
                             <div class="col-sm-10">
-                                <input type="email" name="contact_email" class="form-control" id="contact_email"
+                                <input type="text" name="contact_email" class="form-control" id="contact_email"
                                        value="{{ old('contact_email', $client->contact_email) }}"
                                 >
-                                @error('contact_email')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -120,12 +108,9 @@
                         <div class="form-group row">
                             <label for="invoice_email" class="col-sm-2 col-form-label">Invoice Email</label>
                             <div class="col-sm-10">
-                                <input type="email" name="invoice_email" class="form-control" id="invoice_email"
+                                <input type="text" name="invoice_email" class="form-control" id="invoice_email"
                                        value="{{ old('invoice_email', $client->invoice_email) }}"
                                 >
-                                @error('invoice_email')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
