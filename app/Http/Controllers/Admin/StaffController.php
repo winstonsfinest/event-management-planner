@@ -37,15 +37,23 @@ class StaffController extends BaseController
 
     public function store(Request $request): RedirectResponse
     {
-        $staff = Staff::create($request->all());
+        try {
+            $staff = Staff::create($request->all());
 
-        return redirect()->route('admin.staffs.show', $staff);
+            return redirect()->route('admin.staffs.index')->with('success', 'Staff created successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
+        }
     }
 
     public function update(Request $request, Staff $staff): RedirectResponse
     {
-        $staff->update($request->all());
+        try {
+            $staff->update($request->all());
 
-        return redirect()->route('admin.staffs.show', $staff);
+            return redirect()->route('admin.staffs.index')->with('success', 'Staff updated successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
+        }
     }
 }

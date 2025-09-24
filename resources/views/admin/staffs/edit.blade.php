@@ -18,8 +18,24 @@
         </section>
 
         <section class="content">
-            <form method="post" action="{{ route('admin.staffs.update', $staff) }}">
+
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <form method="post" action="{{ $isEdit ? secure_url(route('admin.staffs.update', $staff)) : secure_url(route('admin.staffs.store')) }}">
                 {{ csrf_field() }}
+                @if($isEdit)
+                    @method('PUT')
+                @endif
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">{{ $isEdit ? 'Edit' : 'View' }} Staff</h3>
@@ -86,7 +102,7 @@
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Notes</label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" rows="5">{{ $staff->notes }}</textarea>
+                                <textarea name="notes" class="form-control" rows="5">{{ $staff->notes }}</textarea>
                             </div>
                         </div>
                     </div>

@@ -170,7 +170,7 @@ Route::name('admin.')->middleware('auth')->group(function () {
         Route::get('/{staff}/edit', [StaffController::class, 'edit'])->name('edit');
         Route::post('/', [StaffController::class, 'store'])->name('store');
         Route::get('/{staff}', [StaffController::class, 'show'])->name('show');
-        Route::post('/{staff}', [StaffController::class, 'update'])->name('update');
+        Route::put('/{staff}', [StaffController::class, 'update'])->name('update');
     });
 
     Route::prefix('equipments')->name('equipments.')->group(function () {
