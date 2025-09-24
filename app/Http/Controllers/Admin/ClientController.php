@@ -38,7 +38,7 @@ class ClientController extends BaseController
         try {
             $client = Client::create($request->all());
 
-            return redirect()->route('admin.clients.show', $client)->with('success', 'Client created successfully!');
+            return redirect()->route('admin.clients.index')->with('success', 'Client created successfully!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
         }
@@ -49,7 +49,7 @@ class ClientController extends BaseController
         try {
             $client->update($request->all());
 
-            return redirect()->route('admin.clients.show', $client)->with('success', 'Client updated successfully!');
+            return redirect()->route('admin.clients.index')->with('success', 'Client updated successfully!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
         }
