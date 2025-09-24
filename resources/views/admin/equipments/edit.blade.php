@@ -18,8 +18,24 @@
         </section>
 
         <section class="content">
-            <form method="post" action="{{ route('admin.equipments.update', $equipment) }}">
+
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <form method="post" action="https://sss.thefinestgroup.co.uk{{ $isEdit ? route('admin.equipments.update', $equipment, false) : route('admin.equipments.store', [], false) }}">
                 {{ csrf_field() }}
+                @if($isEdit)
+                    @method('PUT')
+                @endif
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">{{ $isEdit ? 'Edit' : 'View' }} Equipment</h3>

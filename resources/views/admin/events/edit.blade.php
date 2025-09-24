@@ -19,8 +19,23 @@
 
         <section class="content" id="to-print">
 
-            <form method="post" action="{{ route('admin.events.update', $event) }}">
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <form method="post" action="https://sss.thefinestgroup.co.uk{{ $isEdit ? route('admin.events.update', $event, false) : route('admin.events.store', [], false) }}">
                 {{ csrf_field() }}
+                @if($isEdit)
+                    @method('PUT')
+                @endif
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">{{ $isEdit ? 'Edit' : 'View' }} Event</h3>

@@ -129,7 +129,7 @@ Route::name('admin.')->middleware('auth')->group(function () {
         Route::get('/{event}/edit', [EventController::class, 'edit'])->name('edit');
         Route::post('/', [EventController::class, 'store'])->name('store');
         Route::get('/{event}', [EventController::class, 'show'])->name('show');
-        Route::post('/{event}', [EventController::class, 'update'])->name('update');
+        Route::put('/{event}', [EventController::class, 'update'])->name('update');
         Route::post('/{event}/delete', [EventController::class, 'delete'])->name('delete');
     });
 
@@ -180,6 +180,6 @@ Route::name('admin.')->middleware('auth')->group(function () {
         Route::get('/{equipment}/edit', [EquipmentController::class, 'edit'])->name('edit');
         Route::post('/', [EquipmentController::class, 'store'])->name('store');
         Route::get('/{equipment}', [EquipmentController::class, 'show'])->name('show');
-        Route::post('/{equipment}', [EquipmentController::class, 'update'])->name('update');
+        Route::put('/{equipment}', [EquipmentController::class, 'update'])->name('update');
     });
 });

@@ -15,7 +15,19 @@
 
         <section class="content">
 
-            <form method="post" action="{{ route('admin.events.store') }}">
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <form method="post" action="https://sss.thefinestgroup.co.uk{{ route('admin.events.store', [], false) }}">
                 {{ csrf_field() }}
                 <div class="card">
                     <div class="card-header">

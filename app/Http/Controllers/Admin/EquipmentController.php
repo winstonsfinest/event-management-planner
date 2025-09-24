@@ -35,15 +35,23 @@ class EquipmentController extends BaseController
 
     public function store(Request $request): RedirectResponse
     {
-        $equipment = Equipment::create($request->all());
+        try {
+            $equipment = Equipment::create($request->all());
 
-        return redirect()->route('admin.equipments.show', $equipment);
+            return redirect()->route('admin.equipments.index')->with('success', 'Equipment created successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
+        }
     }
 
     public function update(Request $request, Equipment $equipment): RedirectResponse
     {
-        $equipment->update($request->all());
+        try {
+            $equipment->update($request->all());
 
-        return redirect()->route('admin.equipments.show', $equipment);
+            return redirect()->route('admin.equipments.index')->with('success', 'Equipment updated successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
+        }
     }
 }

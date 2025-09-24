@@ -57,46 +57,54 @@ class EventController extends BaseController
 
     public function store(Request $request): RedirectResponse
     {
-        $event = Event::create($request->all());
+        try {
+            $event = Event::create($request->all());
 
-        $staffIds = $request->get('staff_ids');
-        if($staffIds) {
-            $event->staffs()->attach($staffIds);
+            $staffIds = $request->get('staff_ids');
+            if($staffIds) {
+                $event->staffs()->attach($staffIds);
+            }
+
+            $menuItemIds = $request->get('menu_item_ids');
+            if($menuItemIds) {
+                $event->menu_items()->attach($menuItemIds);
+            }
+
+            $equipmentIds = $request->get('equipment_ids');
+            if($equipmentIds) {
+                $event->equipments()->attach($equipmentIds);
+            }
+
+            return redirect()->route('admin.events.index')->with('success', 'Event created successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
         }
-
-        $menuItemIds = $request->get('menu_item_ids');
-        if($menuItemIds) {
-            $event->menu_items()->attach($menuItemIds);
-        }
-
-        $equipmentIds = $request->get('equipment_ids');
-        if($equipmentIds) {
-            $event->equipments()->attach($equipmentIds);
-        }
-
-        return redirect()->route('admin.events.show', $event);
     }
 
     public function update(Request $request, Event $event): RedirectResponse
     {
-        $event->update($request->all());
+        try {
+            $event->update($request->all());
 
-        $staffIds = $request->get('staff_ids');
-        if($staffIds) {
-            $event->staffs()->sync($staffIds);
+            $staffIds = $request->get('staff_ids');
+            if($staffIds) {
+                $event->staffs()->sync($staffIds);
+            }
+
+            $menuItemIds = $request->get('menu_item_ids');
+            if($menuItemIds) {
+                $event->menu_items()->sync($menuItemIds);
+            }
+
+            $equipmentIds = $request->get('equipment_ids');
+            if($equipmentIds) {
+                $event->equipments()->sync($equipmentIds);
+            }
+
+            return redirect()->route('admin.events.index')->with('success', 'Event updated successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
         }
-
-        $menuItemIds = $request->get('menu_item_ids');
-        if($menuItemIds) {
-            $event->menu_items()->sync($menuItemIds);
-        }
-
-        $equipmentIds = $request->get('equipment_ids');
-        if($equipmentIds) {
-            $event->equipments()->sync($equipmentIds);
-        }
-
-        return redirect()->route('admin.events.show', $event);
     }
 
     public function delete(Event $event): JsonResponse
