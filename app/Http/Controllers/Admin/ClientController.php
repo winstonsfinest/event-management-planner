@@ -35,15 +35,53 @@ class ClientController extends BaseController
 
     public function store(Request $request): RedirectResponse
     {
-        $client = Client::create($request->all());
+        try {
+            $validatedData = $request->validate([
+                'business_name' => 'nullable|string|max:255',
+                'business_address' => 'nullable|string',
+                'contact_name' => 'nullable|string|max:255',
+                'contact_telephone' => 'nullable|string|max:255',
+                'contact_mobile' => 'nullable|string|max:255',
+                'contact_email' => 'nullable|email|max:255',
+                'other_contact' => 'nullable|string',
+                'invoice_address' => 'nullable|string',
+                'invoice_email' => 'nullable|email|max:255',
+                'payment_term' => 'nullable|string|max:255',
+            ]);
 
-        return redirect()->route('admin.clients.show', $client);
+            $client = Client::create($validatedData);
+
+            return redirect()->route('admin.clients.show', $client)->with('success', 'Client created successfully!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
+        }
     }
 
     public function update(Request $request, Client $client): RedirectResponse
     {
-        $client->update($request->all());
+        try {
+            $validatedData = $request->validate([
+                'business_name' => 'nullable|string|max:255',
+                'business_address' => 'nullable|string',
+                'contact_name' => 'nullable|string|max:255',
+                'contact_telephone' => 'nullable|string|max:255',
+                'contact_mobile' => 'nullable|string|max:255',
+                'contact_email' => 'nullable|email|max:255',
+                'other_contact' => 'nullable|string',
+                'invoice_address' => 'nullable|string',
+                'invoice_email' => 'nullable|email|max:255',
+                'payment_term' => 'nullable|string|max:255',
+            ]);
 
-        return redirect()->route('admin.clients.show', $client);
+            $client->update($validatedData);
+
+            return redirect()->route('admin.clients.show', $client)->with('success', 'Client updated successfully!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->errors())->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
+        }
     }
 }

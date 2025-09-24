@@ -19,8 +19,33 @@
 
         <section class="content">
 
-            <form method="post" action="{{ route('admin.clients.store') }}">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <form method="post" action="{{ $isEdit ? route('admin.clients.update', $client) : route('admin.clients.store') }}">
                 {{ csrf_field() }}
+                @if($isEdit)
+                    @method('PUT')
+                @endif
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">{{ $isEdit ? 'Edit' : 'View' }} Client</h3>
@@ -68,9 +93,12 @@
                         <div class="form-group row">
                             <label for="contact_email" class="col-sm-2 col-form-label">Contact Email Address</label>
                             <div class="col-sm-10">
-                                <input type="text" name="contact_email" class="form-control" id="contact_email"
-                                       value="{{ $client->contact_email }}"
+                                <input type="email" name="contact_email" class="form-control" id="contact_email"
+                                       value="{{ old('contact_email', $client->contact_email) }}"
                                 >
+                                @error('contact_email')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">
@@ -92,9 +120,12 @@
                         <div class="form-group row">
                             <label for="invoice_email" class="col-sm-2 col-form-label">Invoice Email</label>
                             <div class="col-sm-10">
-                                <input type="text" name="invoice_email" class="form-control" id="invoice_email"
-                                       value="{{ $client->invoice_email }}"
+                                <input type="email" name="invoice_email" class="form-control" id="invoice_email"
+                                       value="{{ old('invoice_email', $client->invoice_email) }}"
                                 >
+                                @error('invoice_email')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="form-group row">

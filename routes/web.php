@@ -140,7 +140,7 @@ Route::name('admin.')->middleware('auth')->group(function () {
         Route::get('/{client}/edit', [ClientController::class, 'edit'])->name('edit');
         Route::post('/', [ClientController::class, 'store'])->name('store');
         Route::get('/{client}', [ClientController::class, 'show'])->name('show');
-        Route::post('/{client}', [ClientController::class, 'update'])->name('update');
+        Route::put('/{client}', [ClientController::class, 'update'])->name('update');
     });
 
     Route::prefix('menu_types')->name('menu_types.')->group(function () {
