@@ -27,7 +27,7 @@
                 </div>
             @endif
 
-            <form method="post" action="{{ secure_url(route('admin.staffs.store')) }}">
+            <form method="post" action="https://sss.thefinestgroup.co.uk{{ route('admin.staffs.store', [], false) }}">
                 {{ csrf_field() }}
                 <div class="card">
                     <div class="card-header">

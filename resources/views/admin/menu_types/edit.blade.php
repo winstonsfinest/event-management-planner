@@ -31,7 +31,7 @@
                 </div>
             @endif
 
-            <form method="post" action="{{ $isEdit ? secure_url(route('admin.menu_types.update', $menuType)) : secure_url(route('admin.menu_types.store')) }}">
+            <form method="post" action="https://sss.thefinestgroup.co.uk{{ $isEdit ? route('admin.menu_types.update', $menuType, false) : route('admin.menu_types.store', [], false) }}">
                 {{ csrf_field() }}
                 @if($isEdit)
                     @method('PUT')
