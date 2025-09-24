@@ -34,15 +34,23 @@ class MenuTypeController extends BaseController
 
     public function store(Request $request): RedirectResponse
     {
-        $menuType = MenuType::create($request->all());
+        try {
+            $menuType = MenuType::create($request->all());
 
-        return redirect()->route('admin.menu_types.show', $menuType);
+            return redirect()->route('admin.menu_types.index')->with('success', 'Menu Type created successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
+        }
     }
 
     public function update(Request $request, MenuType $menuType): RedirectResponse
     {
-        $menuType->update($request->all());
+        try {
+            $menuType->update($request->all());
 
-        return redirect()->route('admin.menu_types.show', $menuType);
+            return redirect()->route('admin.menu_types.index')->with('success', 'Menu Type updated successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
+        }
     }
 }

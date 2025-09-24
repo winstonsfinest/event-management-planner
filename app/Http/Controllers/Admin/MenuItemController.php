@@ -39,63 +39,71 @@ class MenuItemController extends BaseController
 
     public function store(Request $request): RedirectResponse
     {
-        $data = $request->all();
+        try {
+            $data = $request->all();
 
-        $data['prep_list'] = array_filter($data['prep_list'] ?? []);
-        $menuItem = MenuItem::create($data);
+            $data['prep_list'] = array_filter($data['prep_list'] ?? []);
+            $menuItem = MenuItem::create($data);
 
-        if($request->get('ingredients')) {
-            $menuItem->ingredients()->sync($request->get('ingredients'));
-        }
+            if($request->get('ingredients')) {
+                $menuItem->ingredients()->sync($request->get('ingredients'));
+            }
 
-        $ingredientIds = $request->get('ingredient_ids') ?? [];
-        $ingredientNames = $request->get('ingredient_names');
-        $ingredientWeights = $request->get('ingredient_weights');
-        $ingredientUnits = $request->get('ingredient_units');
+            $ingredientIds = $request->get('ingredient_ids') ?? [];
+            $ingredientNames = $request->get('ingredient_names');
+            $ingredientWeights = $request->get('ingredient_weights');
+            $ingredientUnits = $request->get('ingredient_units');
 
-        foreach ($ingredientIds as $key => $ingredientId) {
-            $menuItem->ingredients()->create([
-                'name' => $ingredientNames[$key],
-                'weight' => $ingredientWeights[$key],
-                'unit' => $ingredientUnits[$key],
-            ]);
-        }
-
-        return redirect()->route('admin.menu_items.show', $menuItem);
-    }
-
-    public function update(Request $request, MenuItem $menuItem): RedirectResponse
-    {
-        $data = $request->all();
-
-        $data['prep_list'] = array_filter($data['prep_list'] ?? []);
-        $menuItem->update($data);
-
-        $ingredientIds = $request->get('ingredient_ids') ?? [];
-        $ingredientNames = $request->get('ingredient_names');
-        $ingredientWeights = $request->get('ingredient_weights');
-        $ingredientUnits = $request->get('ingredient_units');
-
-        foreach ($ingredientIds as $key => $ingredientId) {
-            if($ingredientId){
-                if(!$ingredientNames[$key] && !$ingredientWeights[$key]){
-                    $menuItem->ingredients()->find($ingredientId)->delete();
-                } else {
-                    $menuItem->ingredients()->find($ingredientId)->update([
-                        'name' => $ingredientNames[$key],
-                        'weight' => $ingredientWeights[$key],
-                        'unit' => $ingredientUnits[$key],
-                    ]);
-                }
-            }else{
+            foreach ($ingredientIds as $key => $ingredientId) {
                 $menuItem->ingredients()->create([
                     'name' => $ingredientNames[$key],
                     'weight' => $ingredientWeights[$key],
                     'unit' => $ingredientUnits[$key],
                 ]);
             }
-        }
 
-        return redirect()->route('admin.menu_items.show', $menuItem);
+            return redirect()->route('admin.menu_items.index')->with('success', 'Menu Item created successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
+        }
+    }
+
+    public function update(Request $request, MenuItem $menuItem): RedirectResponse
+    {
+        try {
+            $data = $request->all();
+
+            $data['prep_list'] = array_filter($data['prep_list'] ?? []);
+            $menuItem->update($data);
+
+            $ingredientIds = $request->get('ingredient_ids') ?? [];
+            $ingredientNames = $request->get('ingredient_names');
+            $ingredientWeights = $request->get('ingredient_weights');
+            $ingredientUnits = $request->get('ingredient_units');
+
+            foreach ($ingredientIds as $key => $ingredientId) {
+                if($ingredientId){
+                    if(!$ingredientNames[$key] && !$ingredientWeights[$key]){
+                        $menuItem->ingredients()->find($ingredientId)->delete();
+                    } else {
+                        $menuItem->ingredients()->find($ingredientId)->update([
+                            'name' => $ingredientNames[$key],
+                            'weight' => $ingredientWeights[$key],
+                            'unit' => $ingredientUnits[$key],
+                        ]);
+                    }
+                }else{
+                    $menuItem->ingredients()->create([
+                        'name' => $ingredientNames[$key],
+                        'weight' => $ingredientWeights[$key],
+                        'unit' => $ingredientUnits[$key],
+                    ]);
+                }
+            }
+
+            return redirect()->route('admin.menu_items.index')->with('success', 'Menu Item updated successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage())->withInput();
+        }
     }
 }

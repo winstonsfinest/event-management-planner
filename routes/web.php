@@ -150,7 +150,7 @@ Route::name('admin.')->middleware('auth')->group(function () {
         Route::get('/{menu_type}/edit', [MenuTypeController::class, 'edit'])->name('edit');
         Route::post('/', [MenuTypeController::class, 'store'])->name('store');
         Route::get('/{menu_type}', [MenuTypeController::class, 'show'])->name('show');
-        Route::post('/{menu_type}', [MenuTypeController::class, 'update'])->name('update');
+        Route::put('/{menu_type}', [MenuTypeController::class, 'update'])->name('update');
     });
 
     Route::prefix('menu_items')->name('menu_items.')->group(function () {
@@ -160,7 +160,7 @@ Route::name('admin.')->middleware('auth')->group(function () {
         Route::get('/{menu_item}/edit', [MenuItemController::class, 'edit'])->name('edit');
         Route::post('/', [MenuItemController::class, 'store'])->name('store');
         Route::get('/{menu_item}', [MenuItemController::class, 'show'])->name('show');
-        Route::post('/{menu_item}', [MenuItemController::class, 'update'])->name('update');
+        Route::put('/{menu_item}', [MenuItemController::class, 'update'])->name('update');
     });
 
     Route::prefix('staffs')->name('staffs.')->group(function () {

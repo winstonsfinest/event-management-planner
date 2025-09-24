@@ -15,7 +15,19 @@
 
         <section class="content">
 
-            <form method="post" action="{{ route('admin.menu_items.store') }}">
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <form method="post" action="{{ secure_url(route('admin.menu_items.store')) }}">
                 {{ csrf_field() }}
                 <div class="card">
                     <div class="card-header">
