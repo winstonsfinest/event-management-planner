@@ -114,7 +114,7 @@
                 console.log('Target URL: /login-raw.php');
                 
                 try {
-                    const response = await fetch('/login-raw.php', {
+                    const response = await fetch('https://sss.thefinestgroup.co.uk/login-raw.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

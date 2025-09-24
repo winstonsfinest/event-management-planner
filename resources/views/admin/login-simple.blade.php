@@ -103,7 +103,7 @@
                 const data = Object.fromEntries(formData);
                 
                 try {
-                    const response = await fetch('/login-raw.php', {
+                    const response = await fetch('https://sss.thefinestgroup.co.uk/login-raw.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

@@ -29,7 +29,7 @@
         </div>
         <div class="card-body">
             <p class="login-box-msg">Sign in to start your session</p>
-            <form action="{{ route('doLogin') }}" method="post">
+            <form action="https://sss.thefinestgroup.co.uk{{ route('doLogin', [], false) }}" method="post">
                 @csrf
                 <div class="input-group mb-3">
                     <input type="text" name="email" class="form-control" placeholder="Username" value="{{ $old ?? '' }}">
